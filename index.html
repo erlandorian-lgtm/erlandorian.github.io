@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erlando Brian — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sidebar-bg: #121212;
+    --sidebar-ink: #FFFFFF;
+    --sidebar-ink-dim: #9A9A9A;
+    --base: #F9F9F9;
+    --card: #FFFFFF;
+    --ink: #111111;
+    --ink-soft: #5B6570;
+    --ink-faint: #9AA1A9;
+    --accent: #3B82F6;
+    --line: #E5E5E5;
+    --radius: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--base);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .layout { display: flex; align-items: flex-start; min-height: 100vh; }
+
+  /* ---------- SIDEBAR (fixed / sticky, dark) ---------- */
+  .sidebar {
+    flex: 0 0 320px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-ink);
+    padding: 52px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .sidebar-top .mark { font-size: 20px; font-weight: 800; letter-spacing: 0.3px; margin-bottom: 6px; }
+  .sidebar-top .mark span { color: var(--accent); }
+  .sidebar-top .role { font-size: 13.5px; color: var(--sidebar-ink-dim); margin-bottom: 44px; }
+
+  .sidebar-nav { display: flex; flex-direction: column; gap: 4px; margin-bottom: 40px; }
+  .sidebar-nav a {
+    font-size: 14px; font-weight: 500; color: var(--sidebar-ink-dim);
+    padding: 9px 0; border-left: 2px solid transparent; padding-left: 14px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .sidebar-nav a:hover { color: var(--sidebar-ink); border-left-color: var(--accent); }
+
+  .sidebar-photo-note { font-size: 12.5px; color: var(--sidebar-ink-dim); max-width: 220px; }
+
+  .sidebar-bottom { display: flex; flex-direction: column; gap: 14px; }
+  .sidebar-links { display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; }
+  .sidebar-links a { color: var(--sidebar-ink-dim); }
+  .sidebar-links a:hover { color: var(--accent); }
+  .sidebar-copy { font-size: 11.5px; color: #5A5A5A; margin-top: 8px; }
+
+  /* ---------- CONTENT (scrollable, light) ---------- */
+  .content { flex: 1; padding: 64px 72px 100px; max-width: 920px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 40px 44px;
+    margin-bottom: 28px;
+  }
+
+  .section-eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .section-title { font-size: 26px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.2px; }
+
+  /* Hero */
+  .hero-card h1 { font-size: 40px; font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; margin-bottom: 16px; }
+  .hero-card h1 .accent { color: var(--accent); }
+  .hero-card p.lead { font-size: 16.5px; color: var(--ink-soft); max-width: 560px; margin-bottom: 28px; }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: var(--radius); font-weight: 600; font-size: 13.5px;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  .btn-primary { background: var(--accent); color: #FFFFFF; }
+  .btn-primary:hover { transform: translateY(-2px); background: #2f6fe0; }
+  .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* About */
+  .about-body p { color: var(--ink-soft); font-size: 15px; margin-bottom: 14px; max-width: 620px; }
+  .stat-row { display: flex; gap: 16px; margin-top: 26px; flex-wrap: wrap; }
+  .stat-box { background: var(--base); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; min-width: 150px; }
+  .stat-box .n { font-size: 24px; font-weight: 800; color: var(--accent); }
+  .stat-box .l { font-size: 12.5px; color: var(--ink-faint); margin-top: 2px; }
+
+  /* Skills */
+  .skill-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .skill-group h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); margin-bottom: 12px; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 7px 13px; border-radius: 20px; font-size: 13px; font-weight: 500; background: var(--base); border: 1px solid var(--line); color: var(--ink); }
+
+  /* Projects */
+  .projects-heading { margin-bottom: 20px; }
+  .project-card { padding: 36px 40px; }
+  .project-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 14px; flex-wrap: wrap; }
+  .project-card h3 { font-size: 21px; font-weight: 700; letter-spacing: -0.2px; }
+  .project-tagline { font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 4px; }
+  .project-card p.overview { color: var(--ink-soft); font-size: 14.5px; max-width: 640px; margin-bottom: 22px; }
+
+  .meta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .meta-item .label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-faint); margin-bottom: 5px; }
+  .meta-item .value { font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.45; }
+
+  .project-link {
+    font-size: 13px; font-weight: 600; color: var(--accent);
+    border: 1px solid var(--accent); padding: 9px 16px; border-radius: var(--radius);
+    white-space: nowrap;
+  }
+  .project-link:hover { background: rgba(59,130,246,0.08); }
+
+  /* Experience */
+  .tl-item { padding-bottom: 26px; border-bottom: 1px solid var(--line); margin-bottom: 26px; }
+  .tl-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .tl-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .tl-head h3 { font-size: 16.5px; font-weight: 700; }
+  .tl-head .date { font-size: 12.5px; color: var(--ink-faint); font-weight: 500; }
+  .tl-role { color: var(--accent); font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .tl-item ul { color: var(--ink-soft); font-size: 14px; padding-left: 18px; }
+  .tl-item li { margin-bottom: 4px; }
+
+  /* Education */
+  .edu-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .edu-card .date { color: var(--ink-faint); font-size: 12.5px; margin-bottom: 10px; }
+  .edu-card .degree { color: var(--accent); font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+  .edu-card p { color: var(--ink-soft); font-size: 14px; }
+
+  /* Contact */
+  .contact-card { text-align: left; }
+  .contact-card h2 { font-size: 26px; font-weight: 800; margin-bottom: 10px; }
+  .contact-card p { color: var(--ink-soft); font-size: 15px; margin-bottom: 24px; max-width: 520px; }
+  .contact-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+  .foot-links { display: flex; gap: 22px; font-size: 13px; color: var(--ink-faint); flex-wrap: wrap; }
+
+  @media (max-width: 900px) {
+    .layout { flex-direction: column; }
+    .sidebar { position: relative; height: auto; width: 100%; flex: none; padding: 32px 28px; }
+    .sidebar-nav { flex-direction: row; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 24px; }
+    .sidebar-nav a { padding: 4px 0; border-left: none; }
+    .sidebar-photo-note { display: none; }
+    .content { padding: 40px 22px 70px; }
+    .card, .project-card { padding: 28px 24px; }
+    .skill-groups { grid-template-columns: 1fr 1fr; }
+    .meta-grid { grid-template-columns: 1fr 1fr; }
+    .hero-card h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="mark">ERLANDO<span>.</span></div>
+      <div class="role">Aspiring Data Engineer</div>
+      <nav class="sidebar-nav">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="sidebar-photo-note">Operations professional building a Python, SQL &amp; Airflow skill set — currently in a Data Engineering bootcamp.</p>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="sidebar-links">
+        <a href="mailto:erlando.rian@gmail.com">erlando.rian@gmail.com</a>
+        <a href="https://linkedin.com/in/erlando-brian-655019215/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/erlandorian-lgtm" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="sidebar-copy">© 2026 Erlando Brian · West Jakarta, ID</div>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <section id="hero" class="card hero-card">
+      <div class="section-eyebrow">Portfolio</div>
+      <h1>From logistics floors to<br>data pipelines<span class="accent">.</span></h1>
+      <p class="lead">Operations and administrative professional transitioning into Data Engineering — building clean, tested pipelines with Python, SQL, dbt, and Apache Airflow.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projects">View Projects</a>
+        <a class="btn btn-ghost" href="mailto:erlando.rian@gmail.com">Get in Touch</a>
+      </div>
+    </section>
+
+    <section id="about" class="card">
+      <div class="section-eyebrow">01</div>
+      <div class="section-title">About</div>
+      <div class="about-body">
+        <p>I've spent the last several years in operations — processing delivery orders, coordinating purchasing, and keeping administrative systems accurate under real deadlines. That work taught me to be precise, communicate across departments, and catch errors before they become problems.</p>
+        <p>Now I'm applying that same discipline to data: currently in a Data Engineering bootcamp, building hands-on experience with Python, SQL, dbt, and Airflow — turning raw, messy sources into clean, tested, business-ready datasets.</p>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="n">3</div><div class="l">Data engineering projects on GitHub</div></div>
+        <div class="stat-box"><div class="n">4</div><div class="l">Roles across logistics, purchasing &amp; admin</div></div>
+        <div class="stat-box"><div class="n">3.55</div><div class="l">GPA, B.Eng Industrial Engineering</div></div>
+      </div>
+    </section>
+
+    <section id="skills" class="card">
+      <div class="section-eyebrow">02</div>
+      <div class="section-title">Skills</div>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h4>Data &amp; Programming</h4>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">pandas</span><span class="chip">SQL</span>
+            <span class="chip">dbt</span><span class="chip">Apache Airflow</span><span class="chip">DuckDB</span>
+            <span class="chip">MinIO</span><span class="chip">Docker</span><span class="chip">Selenium</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Tools &amp; Systems</h4>
+          <div class="chip-row">
+            <span class="chip">Excel</span><span class="chip">Pivot Tables</span>
+            <span class="chip">VLOOKUP / XLOOKUP</span><span class="chip">Microsoft Dynamics 365</span>
+            <span class="chip">Google Sheets</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Working Style</h4>
+          <div class="chip-row">
+            <span class="chip">Attention to detail</span><span class="chip">Cross-team coordination</span>
+            <span class="chip">Problem solving</span><span class="chip">Time management</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="projects-heading">
+        <div class="section-eyebrow">03</div>
+        <div class="section-title" style="margin-bottom:0;">Projects</div>
+      </div>
+
+      <article class="card project-card">
+        <div class="project-top">
+          <div>
+            <h3>AdventureWorks — Modern Data Pipeline Experience</h3>
+            <div class="project-tagline">ETL &amp; ELT Orchestration with Apache Airflow</div>
+          </div>
+          <a class="project-link" href="https://github.com/erlandorian-lgtm/adventureworks-airflow-pipeline" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+        <p class="overview">Built parallel ETL and ELT pipelines orchestrated with Apache Airflow on the AdventureWorks dataset. Used Dynamic Task Mapping and XCom to extract from PostgreSQL, landed raw data in MinIO, and transformed it through a DuckDB-based Medallion architecture to answer workforce analytics questions.</p>
+        <div class="meta-grid">
+          <div class="meta-item"><div class="label">Role</div><div class="value">Data Engineer (Bootcamp Project)</div></div>
+          <div class="meta-item"><div class="label">Deliverables</div><div class="value">ETL + ELT DAGs, Medallion Architecture</div></div>
+          <div class="meta-item"><div class="label">Tools</div><div class="value">Airflow, PostgreSQL, MinIO, DuckDB, Docker</div></div>
+          <div class="meta-item"><div class="label">Year</div><div class="value">2026</div></div>
+        </div>
+      </article>
+
+      <article class="card project-card">
+        <div class="project-top">
+          <div>
+            <h3>Pagila — Modern Data Warehouse Experience</h3>
+            <div class="project-tagline">dbt Transformation Pipeline</div>
+          </div>
+          <a class="project-link" href="https://github.com/erlandorian-lgtm/Pagila-Data-Warehouse-Transformation-with-dbt" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+        <p class="overview">Built a multi-layer dbt pipeline (staging → intermediate → mart) on the Pagila retail dataset. Implemented data quality tests and mart-level aggregations to answer business questions such as customer lifetime value.</p>
+        <div class="meta-grid">
+          <div class="meta-item"><div class="label">Role</div><div class="value">Data Engineer (Bootcamp Project)</div></div>
+          <div class="meta-item"><div class="label">Deliverables</div><div class="value">Staging, Intermediate &amp; Mart Models</div></div>
+          <div class="meta-item"><div class="label">Tools</div><div class="value">dbt, SQL</div></div>
+          <div class="meta-item"><div class="label">Year</div><div class="value">2026</div></div>
+        </div>
+      </article>
+
+      <article class="card project-card">
+        <div class="project-top">
+          <div>
+            <h3>RupaRupa — Modern Web Scraping Experience</h3>
+            <div class="project-tagline">Live E-Commerce Data Extraction</div>
+          </div>
+          <a class="project-link" href="https://github.com/erlandorian-lgtm/RupaRupa-Featured-Products-Web-Scraping" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+        <p class="overview">Scraped a live, JavaScript-rendered promo page using Selenium to trigger lazy-loaded content, after confirming compliance with robots.txt. Parsed with BeautifulSoup and pandas, handling deduplication and inconsistent fields before export.</p>
+        <div class="meta-grid">
+          <div class="meta-item"><div class="label">Role</div><div class="value">Independent Project</div></div>
+          <div class="meta-item"><div class="label">Deliverables</div><div class="value">Scraper, Cleaned Dataset (CSV)</div></div>
+          <div class="meta-item"><div class="label">Tools</div><div class="value">Python, Selenium, BeautifulSoup, pandas</div></div>
+          <div class="meta-item"><div class="label">Year</div><div class="value">2026</div></div>
+        </div>
+      </article>
+
+    </section>
+
+    <section id="experience" class="card">
+      <div class="section-eyebrow">04</div>
+      <div class="section-title">Experience</div>
+
+      <div class="tl-item">
+        <div class="tl-head"><h3>SMAS</h3><span class="date">Feb 2025 – Jan 2026</span></div>
+        <div class="tl-role">Logistics Staff</div>
+        <ul>
+          <li>Processed delivery orders, gatepass applications, lift-off documents, and payment requests to support container distribution operations</li>
+          <li>Monitored container movements via logistics dashboards and verified documents to reduce processing errors and shipment delays</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><h3>Allure Industries</h3><span class="date">Feb 2024 – Jun 2024</span></div>
+        <div class="tl-role">Purchasing Staff</div>
+        <ul>
+          <li>Negotiated with vendors and achieved a 10% cost reduction on selected materials; compared suppliers on cost, quality, and reliability</li>
+          <li>Utilized Microsoft Dynamics 365 to track purchase orders, verify vendor data, and monitor purchasing status</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><h3>Bunda Mulia University</h3><span class="date">Feb 2023 – Jan 2024</span></div>
+        <div class="tl-role">Student Services Staff</div>
+        <ul>
+          <li>Handled student administration, payment support, and service inquiries for 50+ students weekly</li>
+          <li>Maintained student records and coordinated with internal departments to resolve service and documentation issues</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><h3>Forsta Kalmedic Global</h3><span class="date">Jul 2021 – Sep 2021</span></div>
+        <div class="tl-role">Engineering Intern</div>
+        <ul>
+          <li>Conducted stock audits and achieved 98% inventory accuracy; assisted in drafting SOPs for warehouse workflows</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="education" class="card edu-card">
+      <div class="section-eyebrow">05</div>
+      <div class="section-title">Education</div>
+      <h3>Universitas Bunda Mulia</h3>
+      <div class="date">Aug 2018 – Aug 2022 · Jakarta, Indonesia</div>
+      <div class="degree">Bachelor of Industrial Engineering, GPA 3.55/4.00</div>
+      <p>Lecturer Assistant — Human Factors and Ergonomics</p>
+    </section>
+
+    <section id="contact" class="card contact-card">
+      <h2>Let's talk data.</h2>
+      <p>Open to opportunities in data engineering and analytics — happy to walk through any of the projects above.</p>
+      <div class="contact-row">
+        <a class="btn btn-primary" href="mailto:erlando.rian@gmail.com">erlando.rian@gmail.com</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/erlando-brian-655019215/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/erlandorian-lgtm" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="foot-links">
+        <span>+62 812-9432-9872</span>
+        <span>West Jakarta, Indonesia</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
